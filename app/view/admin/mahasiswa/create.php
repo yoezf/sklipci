@@ -19,6 +19,7 @@
             <?php endif; ?>
 
             <form action="<?= BASE_URL; ?>/?r=admin/mahasiswaStore" method="post" class="grid md:grid-cols-2 gap-4">
+                                            <?= $this->csrfField() ?>
 
                 <!-- NIM -->
                 <div class="md:col-span-1">

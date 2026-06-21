@@ -37,6 +37,7 @@
                 method="post"
                 enctype="multipart/form-data"
                 class="space-y-5">
+                                            <?= $this->csrfField() ?>
 
                 <!-- Judul -->
                 <div>

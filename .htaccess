@@ -1,0 +1,24 @@
+# ==========================================================================
+# Proteksi akses langsung ke file/direktori sensitif.
+# Letakkan document root web server pada folder proyek ini.
+# ==========================================================================
+
+Options -Indexes
+
+# Blokir akses ke file konfigurasi, dump database, dan dependency
+<FilesMatch "\.(env|sql|lock|json|bat|md|dist)$">
+    Require all denied
+</FilesMatch>
+
+# Izinkan kembali file yang memang perlu (jika ada) - contoh: tidak ada saat ini.
+
+# Blokir direktori internal aplikasi dari akses HTTP langsung
+RedirectMatch 403 ^/?app(/.*)?$
+RedirectMatch 403 ^/?config(/.*)?$
+RedirectMatch 403 ^/?vendor(/.*)?$
+RedirectMatch 403 ^/?Database(/.*)?$
+
+# Blokir file utilitas/pengembangan
+<FilesMatch "^(hash\.php|setup\.bat|composer\.(json|lock))$">
+    Require all denied
+</FilesMatch>

@@ -29,6 +29,7 @@
 
 
             <form action="<?= BASE_URL; ?>/?r=mahasiswa/logPklStore" method="post" class="space-y-5">
+                                            <?= $this->csrfField() ?>
 
                 <!-- Tanggal -->
                 <div>

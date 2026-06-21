@@ -6,6 +6,7 @@
 
   <form action="<?= BASE_URL ?>/?r=mahasiswa/bimbinganPklStore" method="POST"
         class="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 space-y-4">
+                                            <?= $this->csrfField() ?>
 
     <div>
       <label class="block text-xs font-semibold text-slate-600 mb-1">Tanggal</label>

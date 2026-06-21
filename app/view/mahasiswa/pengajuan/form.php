@@ -81,6 +81,7 @@ $lampiranHint = $lampiranHintMap[$jenis] ?? 'Format PDF, maks 5 MB.';
             method="post"
             enctype="multipart/form-data"
             class="bg-white shadow-md rounded-2xl p-4 md:p-6 space-y-4">
+                                            <?= $this->csrfField() ?>
 
             <?php if ($jenis === 'pkl'): ?>
                 <!-- ================= PKL ================= -->

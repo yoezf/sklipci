@@ -33,6 +33,7 @@ $jenisLabel = $labelJenis[$jenis] ?? ucfirst($jenis);
         <?php endif; ?>
 
         <form action="<?= BASE_URL; ?>/?r=admin/jadwal<?= $jenisLabel; ?>Store" method="post" class="space-y-4">
+                                            <?= $this->csrfField() ?>
             <div>
                 <label class="block text-xs font-medium text-slate-700 mb-1">
                     Pengajuan <?= htmlspecialchars($jenisLabel); ?>

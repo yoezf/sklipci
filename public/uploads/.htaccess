@@ -1,0 +1,13 @@
+# Cegah eksekusi skrip apa pun di folder upload (defense-in-depth terhadap RCE)
+php_flag engine off
+RemoveHandler .php .phtml .php3 .php4 .php5 .php7 .pht .phar
+RemoveType .php .phtml .php3 .php4 .php5 .php7 .pht .phar
+
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|pht|phar|cgi|pl|asp|aspx|sh|exe)$">
+    Require all denied
+</FilesMatch>
+
+# Hanya izinkan file PDF diakses langsung
+<FilesMatch "\.(pdf)$">
+    Require all granted
+</FilesMatch>

@@ -132,6 +132,7 @@ $nipPembimbing  = $pengajuan['nip_pembimbing'] ?? null;
                     </h2>
 
                     <form action="<?= BASE_URL; ?>/?r=admin/pengajuanUpdateStatus" method="post" class="space-y-4">
+                                            <?= $this->csrfField() ?>
 
                         <input type="hidden" name="id" value="<?= (int)$pengajuan['id']; ?>">
                         <input type="hidden" name="jenis" value="<?= htmlspecialchars($jenis); ?>">

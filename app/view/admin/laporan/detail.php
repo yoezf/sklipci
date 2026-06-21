@@ -84,6 +84,7 @@ $badgeClass = $badgeStatus[$status] ?? 'bg-slate-100 text-slate-700';
                 </h2>
 
                 <form action="<?= BASE_URL; ?>/?r=admin/laporanAkhirUpdateStatus" method="post" class="space-y-4">
+                                            <?= $this->csrfField() ?>
                     <input type="hidden" name="id" value="<?= (int)$laporan['id']; ?>">
 
                     <div>

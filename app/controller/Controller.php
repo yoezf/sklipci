@@ -2,6 +2,31 @@
 
 class Controller
 {
+    /** Token CSRF tersembunyi untuk disisipkan di dalam <form>. */
+    protected function csrfField(): string
+    {
+        return csrf_field();
+    }
+
+    /** Escape nilai untuk output HTML (cegah XSS). */
+    protected function e($value): string
+    {
+        return e($value);
+    }
+
+    /** Redirect aman ke route internal. */
+    protected function redirect(string $route): void
+    {
+        header('Location: ' . BASE_URL . $route);
+        exit;
+    }
+
+    /** Kembali ke halaman sebelumnya hanya jika internal (cegah open redirect). */
+    protected function back(string $fallback = '/'): void
+    {
+        safe_redirect($_SERVER['HTTP_REFERER'] ?? null, $fallback);
+    }
+
     protected function view(string $view, array $data = []): void
     {
         extract($data);

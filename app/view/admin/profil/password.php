@@ -30,6 +30,7 @@
             <!-- Form Card -->
             <div class="bg-white shadow-lg rounded-xl p-6 border border-slate-200">
                 <form action="<?= BASE_URL; ?>/?r=admin/gantiPasswordAdminUpdate" method="post" class="space-y-5">
+                                            <?= $this->csrfField() ?>
 
                     <!-- Password Lama -->
                     <div>

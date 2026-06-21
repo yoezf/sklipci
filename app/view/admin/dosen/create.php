@@ -19,6 +19,7 @@
             <?php endif; ?>
 
             <form action="<?= BASE_URL; ?>/?r=admin/dosenStore" method="post" class="grid md:grid-cols-2 gap-4">
+                                            <?= $this->csrfField() ?>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">
                         NIP

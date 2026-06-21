@@ -17,6 +17,7 @@
 
         <form action="<?= BASE_URL; ?>/?r=admin/jadwal<?= ucfirst($jenis); ?>Update" method="post"
               class="bg-white shadow-md rounded-lg p-4 space-y-3">
+                                            <?= $this->csrfField() ?>
             <input type="hidden" name="id" value="<?= (int)$jadwal['id']; ?>">
 
             <div class="grid md:grid-cols-2 gap-3">

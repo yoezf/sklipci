@@ -1,0 +1,17 @@
+# Kredensial & konfigurasi lokal
+.env
+
+# File upload pengguna (jangan commit data pribadi)
+public/uploads/pengajuan/*
+public/uploads/laporan_akhir/*
+!public/uploads/pengajuan/.gitkeep
+!public/uploads/laporan_akhir/.gitkeep
+!public/uploads/.htaccess
+
+# Dependency
+/vendor/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

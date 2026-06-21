@@ -43,6 +43,7 @@ include __DIR__ . '/../../partials/header.php';
           method="post"
           enctype="multipart/form-data"
           class="flex flex-col sm:flex-row items-start sm:items-end gap-4">
+                                            <?= $this->csrfField() ?>
           <div class="flex-1">
             <label class="block text-sm font-medium text-slate-700 mb-1">
               Upload File CSV

@@ -38,6 +38,16 @@ class AuthController extends Controller
             exit;
         }
 
+        // === RATE LIMITING / ANTI BRUTE-FORCE (per session) ===
+        $now = time();
+        $lock = $_SESSION['login_lock_until'] ?? 0;
+        if ($lock > $now) {
+            $wait = $lock - $now;
+            $_SESSION['flash_error'] = "Terlalu banyak percobaan gagal. Coba lagi dalam {$wait} detik.";
+            header('Location: ' . BASE_URL . '/?r=auth/loginForm');
+            exit;
+        }
+
         $conn = db();
 
         // === Ambil user (LOGIN LAMA TETAP) ===
@@ -54,10 +64,19 @@ class AuthController extends Controller
         $stmt->close();
 
         if (!$user || !password_verify($password, $user['password'])) {
+            // Hitung kegagalan; kunci sementara setelah 5 percobaan.
+            $_SESSION['login_attempts'] = ($_SESSION['login_attempts'] ?? 0) + 1;
+            if ($_SESSION['login_attempts'] >= 5) {
+                $_SESSION['login_lock_until'] = time() + 60; // lockout 60 detik
+                $_SESSION['login_attempts']   = 0;
+            }
             $_SESSION['flash_error'] = 'Username atau password salah.';
             header('Location: ' . BASE_URL . '/?r=auth/loginForm');
             exit;
         }
+
+        // Login valid -> reset penghitung kegagalan
+        unset($_SESSION['login_attempts'], $_SESSION['login_lock_until']);
 
         if ($user['status'] !== 'aktif') {
             $_SESSION['flash_error'] = 'Akun Anda tidak aktif. Silakan hubungi admin.';

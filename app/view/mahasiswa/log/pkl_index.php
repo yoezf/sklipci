@@ -87,11 +87,14 @@
                                         class="inline-flex items-center px-2 py-1 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 mr-1">
                                         Edit
                                     </a>
-                                    <a href="<?= BASE_URL; ?>/?r=mahasiswa/logPklDelete&id=<?= $row['id']; ?>"
-                                        onclick="return confirm('Yakin ingin menghapus log ini?');"
-                                        class="inline-flex items-center px-2 py-1 rounded-full bg-red-500 text-white hover:bg-red-600">
-                                        Hapus
-                                    </a>
+                                    <form action="<?= BASE_URL; ?>/?r=mahasiswa/logPklDelete" method="post" class="inline"
+                                              onsubmit="return confirm('Yakin ingin menghapus log ini?');">
+                                            <?= $this->csrfField() ?>
+                                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                            <button type="submit" class="inline-flex items-center px-2 py-1 rounded-full bg-red-500 text-white hover:bg-red-600">
+                                                Hapus
+                                            </button>
+                                        </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

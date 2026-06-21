@@ -16,6 +16,7 @@
             <?php endif; ?>
 
             <form action="<?= BASE_URL; ?>/?r=admin/prodiUpdate" method="post" class="space-y-4">
+                                            <?= $this->csrfField() ?>
                 <input type="hidden" name="id" value="<?= (int)$prodi['id']; ?>">
 
                 <!-- Kode Prodi -->

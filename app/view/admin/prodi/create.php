@@ -18,6 +18,7 @@
             <?php endif; ?>
 
             <form action="<?= BASE_URL; ?>/?r=admin/prodiStore" method="post" class="space-y-4">
+                                            <?= $this->csrfField() ?>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">
                         Kode Prodi

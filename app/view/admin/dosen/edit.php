@@ -18,6 +18,7 @@
             <?php endif; ?>
 
             <form action="<?= BASE_URL; ?>/?r=admin/dosenUpdate" method="post" class="grid md:grid-cols-2 gap-4">
+                                            <?= $this->csrfField() ?>
                 <input type="hidden" name="id" value="<?= (int)$dosen['id']; ?>">
 
                 <div>

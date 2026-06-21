@@ -73,15 +73,14 @@
                                         </a>
 
                                         <!-- Hapus -->
-                                        <a href="<?= BASE_URL; ?>/?r=admin/mahasiswaDelete&id=<?= $row['id']; ?>"
-                                            class="inline-flex items-center p-1.5 bg-red-600 rounded hover:bg-red-700"
-                                            onclick="return confirm('Yakin ingin menghapus mahasiswa ini beserta akun loginnya?');">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="white" class="w-3.5 h-3.5">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M3 6h18M8 6v12a2 2 0 002 2h4a2 2 0 002-2V6M10 10v6m4-6v6M9 6l.5-2h5L15 6" />
-                                            </svg>
-                                        </a>
+                                        <form action="<?= BASE_URL; ?>/?r=admin/mahasiswaDelete" method="post" class="inline"
+                                              onsubmit="return confirm('Yakin ingin menghapus mahasiswa ini beserta akun loginnya?');">
+                                            <?= $this->csrfField() ?>
+                                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                            <button type="submit" class="inline-flex items-center p-1.5 bg-red-600 rounded hover:bg-red-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-3.5 h-3.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6v12a2 2 0 002 2h4a2 2 0 002-2V6M10 10v6m4-6v6M9 6l.5-2h5L15 6" /></svg>
+                                            </button>
+                                        </form>
 
                                     </td>
                                 </tr>

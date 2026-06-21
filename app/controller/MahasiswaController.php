@@ -394,7 +394,9 @@ class MahasiswaController extends Controller
 
             $safeJenis = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($jenis));
             $safeNim   = preg_replace('/[^a-zA-Z0-9]+/', '_', $mhs['nim']);
-            $fileName  = 'pengajuan_' . $safeJenis . '_' . $safeNim . '_' . time() . '.pdf';
+            // Tambahkan token acak agar nama file tidak bisa ditebak (cegah IDOR via enumerasi URL).
+            $rand      = bin2hex(random_bytes(8));
+            $fileName  = 'pengajuan_' . $safeJenis . '_' . $safeNim . '_' . time() . '_' . $rand . '.pdf';
 
             $targetPath = $uploadDir . $fileName;
 
@@ -1115,7 +1117,9 @@ class MahasiswaController extends Controller
         // buat nama file aman: NIM_Tahun_laporan_akhir.pdf
         $tahun = date('Y');
         $safeJudul = preg_replace('/[^a-zA-Z0-9]+/', '_', strtolower($judul));
-        $fileName  = $mhs['nim'] . '_' . $tahun . '_LAPORAN_' . $safeJudul . '.pdf';
+        // Token acak agar nama file tidak bisa ditebak (cegah IDOR via enumerasi URL).
+        $rand      = bin2hex(random_bytes(8));
+        $fileName  = $mhs['nim'] . '_' . $tahun . '_LAPORAN_' . $safeJudul . '_' . $rand . '.pdf';
 
         $uploadDir = __DIR__ . '/../../public/uploads/laporan_akhir/';
         if (!is_dir($uploadDir)) {
@@ -1241,7 +1245,15 @@ class MahasiswaController extends Controller
     public function logPklEdit(): void
     {
         $this->ensureMahasiswa();
-        $idMahasiswa = (int)($_SESSION['user_id'] ?? 0);
+        // FIX: $_SESSION['user_id'] tidak pernah di-set saat login.
+        // Gunakan data mahasiswa aktif (mahasiswa.id) seperti method lainnya.
+        $mhs = $this->getMahasiswaAktif();
+        if (!$mhs) {
+            $_SESSION['flash_error'] = 'Data mahasiswa untuk akun ini belum tersedia.';
+            header('Location: ' . BASE_URL . '/?r=mahasiswa/logPklIndex');
+            exit;
+        }
+        $idMahasiswa = (int)$mhs['id'];
         $id          = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
         if ($id <= 0) {
@@ -1280,7 +1292,15 @@ class MahasiswaController extends Controller
     public function logPklUpdate(): void
     {
         $this->ensureMahasiswa();
-        $idMahasiswa = (int)($_SESSION['user_id'] ?? 0);
+        // FIX: $_SESSION['user_id'] tidak pernah di-set saat login.
+        // Gunakan data mahasiswa aktif (mahasiswa.id) seperti method lainnya.
+        $mhs = $this->getMahasiswaAktif();
+        if (!$mhs) {
+            $_SESSION['flash_error'] = 'Data mahasiswa untuk akun ini belum tersedia.';
+            header('Location: ' . BASE_URL . '/?r=mahasiswa/logPklIndex');
+            exit;
+        }
+        $idMahasiswa = (int)$mhs['id'];
 
         if (empty($_POST['id']) || empty($_POST['tanggal']) || empty($_POST['kegiatan'])) {
             $_SESSION['flash_error'] = 'Data tidak lengkap.';
@@ -1326,8 +1346,16 @@ class MahasiswaController extends Controller
     public function logPklDelete(): void
     {
         $this->ensureMahasiswa();
-        $idMahasiswa = (int)($_SESSION['user_id'] ?? 0);
-        $id          = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        // FIX: $_SESSION['user_id'] tidak pernah di-set saat login.
+        // Gunakan data mahasiswa aktif (mahasiswa.id) seperti method lainnya.
+        $mhs = $this->getMahasiswaAktif();
+        if (!$mhs) {
+            $_SESSION['flash_error'] = 'Data mahasiswa untuk akun ini belum tersedia.';
+            header('Location: ' . BASE_URL . '/?r=mahasiswa/logPklIndex');
+            exit;
+        }
+        $idMahasiswa = (int)$mhs['id'];
+        $id          = isset($_POST['id']) ? (int)$_POST['id'] : 0;
 
         if ($id > 0) {
             $conn = db();

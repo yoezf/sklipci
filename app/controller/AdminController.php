@@ -278,7 +278,7 @@ class AdminController extends Controller
     {
         $this->requireRole(['admin']);
 
-        $id = (int)($_GET['id'] ?? 0);
+        $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
             header('Location: ' . BASE_URL . '/?r=admin/prodiIndex');
             exit;
@@ -345,8 +345,8 @@ class AdminController extends Controller
 
         if (!preg_match('/^[0-9]{1,13}$/', $no_hp)) {
             $_SESSION['flash_error'] = "Nomor HP hanya boleh angka dan maksimal 13 digit.";
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
-            exit;
+            // Cegah open redirect: hanya kembali ke URL internal, fallback ke form.
+            safe_redirect($_SERVER['HTTP_REFERER'] ?? null, '/?r=admin/mahasiswaCreateForm');
         }
 
         if ($nim === '' || $nama === '' || $username === '' || $prodi_id <= 0) {
@@ -519,7 +519,7 @@ class AdminController extends Controller
     {
         $this->requireRole(['admin']);
 
-        $id = (int)($_GET['id'] ?? 0);
+        $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
             header('Location: ' . BASE_URL . '/?r=admin/mahasiswaIndex');
             exit;
@@ -992,7 +992,7 @@ class AdminController extends Controller
     {
         $this->requireRole(['admin']);
 
-        $id = (int)($_GET['id'] ?? 0);
+        $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
             header('Location: ' . BASE_URL . '/?r=admin/dosenIndex');
             exit;
@@ -1834,7 +1834,7 @@ class AdminController extends Controller
     {
         $this->requireRole(['admin']);
 
-        $id = (int)($_GET['id'] ?? 0);
+        $id = (int)($_POST['id'] ?? 0);
         if ($id <= 0) {
             echo "Jadwal tidak valid.";
             exit;
